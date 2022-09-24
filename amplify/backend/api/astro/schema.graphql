@@ -1,0 +1,60 @@
+type Blog @model @auth(rules: [{allow: private, provider: iam}, {allow: public, provider: apiKey}]) {
+  id: ID!
+  title: String
+  content: String
+  switch: Boolean
+  authorName: String
+}
+
+type InputGallery @model @auth(rules: [{allow: private, provider: iam}, {allow: public, provider: apiKey}]) {
+  id: ID!
+  num: Int
+  rootbeer: Float
+  maybe: Boolean
+  maybeSlide: Boolean
+  maybeCheck: Boolean
+  timestamp: AWSTimestamp
+  ippy: AWSIPAddress
+  timeisnow: AWSTime
+  awsphony: AWSPhone
+}
+
+type Book @model @auth(rules: [{allow: private, provider: iam}, {allow: public, provider: apiKey}]) {
+  id: ID!
+  name: String
+  bookImageSrc: AWSURL
+  description: String
+  authorID: ID! @index(name: "byAuthorID")
+}
+
+type Author @model @auth(rules: [{allow: private, provider: iam}, {allow: public, provider: apiKey}]) {
+  id: ID!
+  name: String
+  profileImageSrc: AWSURL
+  description: String
+  books: [Book] @hasMany(indexName: "byAuthorID", fields: ["id"])
+}
+
+enum PostStatus {
+  PENDING
+  POSTED
+  IN_REVIEW
+}
+
+type Profile @model @auth(rules: [{allow: private, provider: iam}, {allow: public, provider: apiKey}]) {
+  id: ID!
+  name: String
+  email: AWSEmail
+  location: String
+  profile_url: AWSURL
+}
+
+type Post @model @auth(rules: [{allow: private, provider: iam}, {allow: public, provider: apiKey}]) {
+  id: ID!
+  caption: String
+  username: String
+  post_url: AWSURL
+  profile_url: AWSURL
+  status: PostStatus
+}
+ 

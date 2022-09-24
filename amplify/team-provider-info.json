@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-astro-staging-183549-authRole",
+      "UnauthRoleArn": "arn:aws:iam::794099092520:role/amplify-astro-staging-183549-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::794099092520:role/amplify-astro-staging-183549-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-astro-staging-183549-deployment",
+      "UnauthRoleName": "amplify-astro-staging-183549-unauthRole",
+      "StackName": "amplify-astro-staging-183549",
+      "StackId": "arn:aws:cloudformation:us-east-1:794099092520:stack/amplify-astro-staging-183549/5889fd80-4d55-11ec-85a7-0aff5d09b795",
+      "AmplifyAppId": "d2l7kmsyt1cyeu"
+    },
+    "categories": {
+      "auth": {
+        "astro": {}
+      }
+    }
+  }
+}
