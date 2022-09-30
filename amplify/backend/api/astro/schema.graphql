@@ -1,10 +1,12 @@
 type Blog @model @auth(rules: [{allow: private, provider: iam}, {allow: public, provider: apiKey}]) {
   id: ID!
-  title: String
-  content: String
-  switch: Boolean
-  authorName: String
+  title: String # ''
+  content: String # ''
+  tags: [String] # []
+  published: AWSDateTime # ''
 }
+
+# record id => id:'asdasd' => ''
 
 type InputGallery @model @auth(rules: [{allow: private, provider: iam}, {allow: public, provider: apiKey}]) {
   id: ID!

@@ -6,7 +6,7 @@
 
 import * as React from "react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { GridProps, PhoneNumberFieldProps, SliderFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { CheckboxFieldProps, GridProps, PhoneNumberFieldProps, RadioGroupFieldProps, StepperFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -20,6 +20,7 @@ export declare type InputGalleryCreateFormInputValues<useBase extends boolean = 
     maybeSlide?: UseBaseOrValidationType<useBase, boolean>;
     maybeCheck?: UseBaseOrValidationType<useBase, boolean>;
     timestamp?: UseBaseOrValidationType<useBase, number>;
+    updatedAt?: UseBaseOrValidationType<useBase, string>;
     ippy?: UseBaseOrValidationType<useBase, string>;
     timeisnow?: UseBaseOrValidationType<useBase, string>;
     awsphony?: UseBaseOrValidationType<useBase, string>;
@@ -27,12 +28,13 @@ export declare type InputGalleryCreateFormInputValues<useBase extends boolean = 
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type InputGalleryCreateFormOverridesProps = {
     InputGalleryCreateFormGrid?: FormProps<GridProps>;
-    num?: FormProps<SliderFieldProps>;
+    num?: FormProps<StepperFieldProps>;
     rootbeer?: FormProps<TextFieldProps>;
-    maybe?: FormProps<SwitchFieldProps>;
+    maybe?: FormProps<RadioGroupFieldProps>;
     maybeSlide?: FormProps<SwitchFieldProps>;
-    maybeCheck?: FormProps<SwitchFieldProps>;
+    maybeCheck?: FormProps<CheckboxFieldProps>;
     timestamp?: FormProps<TextFieldProps>;
+    updatedAt?: FormProps<TextFieldProps>;
     ippy?: FormProps<TextFieldProps>;
     timeisnow?: FormProps<TextFieldProps>;
     awsphony?: FormProps<PhoneNumberFieldProps>;

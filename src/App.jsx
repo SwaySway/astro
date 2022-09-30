@@ -1,25 +1,65 @@
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider, withAuthenticator } from '@aws-amplify/ui-react';
+import { Amplify } from 'aws-amplify';
+import awsconfig from './aws-exports';
+import { BlogCreateForm, BlogUpdateForm, InputGalleryUpdateForm, PostUpdateForm, studioTheme } from './ui-components';
+import { FormTheater, InputBox } from './components';
+import '@aws-amplify/ui-react/styles.css'; // default theme
+import { useDataStoreBinding } from '@aws-amplify/ui-react/internal';
+import { InputGallery, Post, Blog } from './models';
+
+Amplify.configure(awsconfig);
 
 const App = () => {
+  const posts = useDataStoreBinding({
+    model: Post,
+    type: 'collection'
+  }).items;
+
+  const inputs = useDataStoreBinding({
+    model: InputGallery,
+    type: 'collection',
+  }).items;
+
+  const blogs = useDataStoreBinding({
+    model: Blog,
+    type: 'collection',
+  }).items;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={studioTheme}>
+      <FormTheater
+      forms={[
+        { name: 'BlogCreate', form: <BlogCreateForm
+        onChange={(fields) => {
+          const override = {
+            ...fields,
+            tags: [...fields?.tags, 'added my own element'],
+          };
+          console.log(JSON.stringify(override));
+          return override;
+        }}
+        onValidate={{
+          tags: (value) => {
+            if (value === 'invalid') {
+              return {
+                hasError: true,
+                errorMessage: 'invalid element being added'
+              }
+            } else {
+              return {
+                hasError: false,
+              };
+            }
+          }
+        }}
+        /> },
+        { name: 'BlogUpdate', form: <BlogUpdateForm blog={blogs[1]} /> },
+        { name: 'PostUpdateForm', form: <PostUpdateForm post={posts[0]} /> },
+        { name: 'SampleInputs', form: <InputBox /> },
+        { name: 'InputGallery', form: <InputGalleryUpdateForm inputGallery={inputs[0]} /> },
+      ]}
+      ></FormTheater>
+    </ThemeProvider>
   );
 }
 
-export default App;
+export default withAuthenticator(App);

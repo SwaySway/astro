@@ -11,10 +11,13 @@ import { InputGallery } from "../models";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Button,
+  CheckboxField,
   Flex,
   Grid,
   PhoneNumberField,
-  SliderField,
+  Radio,
+  RadioGroupField,
+  StepperField,
   SwitchField,
   TextField,
 } from "@aws-amplify/ui-react";
@@ -36,6 +39,7 @@ export default function InputGalleryCreateForm(props) {
   const [maybeSlide, setMaybeSlide] = React.useState(undefined);
   const [maybeCheck, setMaybeCheck] = React.useState(undefined);
   const [timestamp, setTimestamp] = React.useState(undefined);
+  const [updatedAt, setUpdatedAt] = React.useState(undefined);
   const [ippy, setIppy] = React.useState(undefined);
   const [timeisnow, setTimeisnow] = React.useState(undefined);
   const [awsphony, setAwsphony] = React.useState(undefined);
@@ -47,6 +51,7 @@ export default function InputGalleryCreateForm(props) {
     setMaybeSlide(undefined);
     setMaybeCheck(undefined);
     setTimestamp(undefined);
+    setUpdatedAt(undefined);
     setIppy(undefined);
     setTimeisnow(undefined);
     setAwsphony(undefined);
@@ -59,6 +64,7 @@ export default function InputGalleryCreateForm(props) {
     maybeSlide: [],
     maybeCheck: [],
     timestamp: [],
+    updatedAt: [],
     ippy: [{ type: "IpAddress" }],
     timeisnow: [],
     awsphony: [{ type: "Phone" }],
@@ -87,6 +93,7 @@ export default function InputGalleryCreateForm(props) {
           maybeSlide,
           maybeCheck,
           timestamp,
+          updatedAt,
           ippy,
           timeisnow,
           awsphony,
@@ -127,12 +134,12 @@ export default function InputGalleryCreateForm(props) {
       {...rest}
       {...getOverrideProps(overrides, "InputGalleryCreateForm")}
     >
-      <SliderField
+      <StepperField
         label="Num"
-        isDisabled={false}
+        isReadOnly={false}
         isRequired={false}
         value={num}
-        onChange={async (e) => {
+        onStepChange={async (e) => {
           let value = e;
           if (onChange) {
             const modelFields = {
@@ -142,6 +149,7 @@ export default function InputGalleryCreateForm(props) {
               maybeSlide,
               maybeCheck,
               timestamp,
+              updatedAt,
               ippy,
               timeisnow,
               awsphony,
@@ -158,9 +166,10 @@ export default function InputGalleryCreateForm(props) {
         errorMessage={errors.num?.errorMessage}
         hasError={errors.num?.hasError}
         {...getOverrideProps(overrides, "num")}
-      ></SliderField>
+      ></StepperField>
       <TextField
         label="Rootbeer"
+        descriptiveText="like the number"
         isRequired={false}
         isReadOnly={false}
         type="number"
@@ -174,6 +183,7 @@ export default function InputGalleryCreateForm(props) {
               maybeSlide,
               maybeCheck,
               timestamp,
+              updatedAt,
               ippy,
               timeisnow,
               awsphony,
@@ -191,12 +201,13 @@ export default function InputGalleryCreateForm(props) {
         hasError={errors.rootbeer?.hasError}
         {...getOverrideProps(overrides, "rootbeer")}
       ></TextField>
-      <SwitchField
-        label="Maybe"
-        defaultChecked={false}
-        isDisabled={false}
+      <RadioGroupField
+        label="Maybe?"
+        name="maybe"
+        isReadOnly={false}
+        isRequired={false}
         onChange={async (e) => {
-          let value = e.target.checked;
+          let value = e.target.value === "true";
           if (onChange) {
             const modelFields = {
               num,
@@ -205,6 +216,7 @@ export default function InputGalleryCreateForm(props) {
               maybeSlide,
               maybeCheck,
               timestamp,
+              updatedAt,
               ippy,
               timeisnow,
               awsphony,
@@ -221,9 +233,20 @@ export default function InputGalleryCreateForm(props) {
         errorMessage={errors.maybe?.errorMessage}
         hasError={errors.maybe?.hasError}
         {...getOverrideProps(overrides, "maybe")}
-      ></SwitchField>
+      >
+        <Radio
+          children="Yes"
+          value="true"
+          {...getOverrideProps(overrides, "maybeRadio0")}
+        ></Radio>
+        <Radio
+          children="No"
+          value="false"
+          {...getOverrideProps(overrides, "maybeRadio1")}
+        ></Radio>
+      </RadioGroupField>
       <SwitchField
-        label="Maybe slide"
+        label="flick of the switch"
         defaultChecked={false}
         isDisabled={false}
         onChange={async (e) => {
@@ -236,6 +259,7 @@ export default function InputGalleryCreateForm(props) {
               maybeSlide: value,
               maybeCheck,
               timestamp,
+              updatedAt,
               ippy,
               timeisnow,
               awsphony,
@@ -253,10 +277,12 @@ export default function InputGalleryCreateForm(props) {
         hasError={errors.maybeSlide?.hasError}
         {...getOverrideProps(overrides, "maybeSlide")}
       ></SwitchField>
-      <SwitchField
-        label="Maybe check"
-        defaultChecked={false}
+      <CheckboxField
+        label="Maybe check?"
+        name="maybeCheck"
+        value="maybeCheck"
         isDisabled={false}
+        defaultChecked={false}
         onChange={async (e) => {
           let value = e.target.checked;
           if (onChange) {
@@ -267,6 +293,7 @@ export default function InputGalleryCreateForm(props) {
               maybeSlide,
               maybeCheck: value,
               timestamp,
+              updatedAt,
               ippy,
               timeisnow,
               awsphony,
@@ -283,9 +310,10 @@ export default function InputGalleryCreateForm(props) {
         errorMessage={errors.maybeCheck?.errorMessage}
         hasError={errors.maybeCheck?.hasError}
         {...getOverrideProps(overrides, "maybeCheck")}
-      ></SwitchField>
+      ></CheckboxField>
       <TextField
         label="Timestamp"
+        descriptiveText="enter the stampy"
         isRequired={false}
         isReadOnly={false}
         type="datetime-local"
@@ -299,6 +327,7 @@ export default function InputGalleryCreateForm(props) {
               maybeSlide,
               maybeCheck,
               timestamp: value,
+              updatedAt,
               ippy,
               timeisnow,
               awsphony,
@@ -317,7 +346,41 @@ export default function InputGalleryCreateForm(props) {
         {...getOverrideProps(overrides, "timestamp")}
       ></TextField>
       <TextField
+        label="Updated at"
+        isRequired={false}
+        isReadOnly={true}
+        type="datetime-local"
+        onChange={async (e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              num,
+              rootbeer,
+              maybe,
+              maybeSlide,
+              maybeCheck,
+              timestamp,
+              updatedAt: value,
+              ippy,
+              timeisnow,
+              awsphony,
+            };
+            const result = onChange(modelFields);
+            value = result?.updatedAt ?? value;
+          }
+          if (errors.updatedAt?.hasError) {
+            await runValidationTasks("updatedAt", value);
+          }
+          setUpdatedAt(value);
+        }}
+        onBlur={() => runValidationTasks("updatedAt", updatedAt)}
+        errorMessage={errors.updatedAt?.errorMessage}
+        hasError={errors.updatedAt?.hasError}
+        {...getOverrideProps(overrides, "updatedAt")}
+      ></TextField>
+      <TextField
         label="Ippy"
+        descriptiveText="ip ip ip ip"
         isRequired={false}
         isReadOnly={false}
         onChange={async (e) => {
@@ -330,6 +393,7 @@ export default function InputGalleryCreateForm(props) {
               maybeSlide,
               maybeCheck,
               timestamp,
+              updatedAt,
               ippy: value,
               timeisnow,
               awsphony,
@@ -349,6 +413,7 @@ export default function InputGalleryCreateForm(props) {
       ></TextField>
       <TextField
         label="Timeisnow"
+        descriptiveText="better than previously,"
         isRequired={false}
         isReadOnly={false}
         type="time"
@@ -362,6 +427,7 @@ export default function InputGalleryCreateForm(props) {
               maybeSlide,
               maybeCheck,
               timestamp,
+              updatedAt,
               ippy,
               timeisnow: value,
               awsphony,
@@ -384,6 +450,7 @@ export default function InputGalleryCreateForm(props) {
         defaultCountryCode="+1"
         isRequired={false}
         isReadOnly={false}
+        descriptiveText="no phony numbers >:("
         onChange={async (e) => {
           let { value } = e.target;
           if (onChange) {
@@ -394,6 +461,7 @@ export default function InputGalleryCreateForm(props) {
               maybeSlide,
               maybeCheck,
               timestamp,
+              updatedAt,
               ippy,
               timeisnow,
               awsphony: value,

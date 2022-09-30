@@ -24,17 +24,18 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "switch": {
-                    "name": "switch",
-                    "isArray": false,
-                    "type": "Boolean",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "authorName": {
-                    "name": "authorName",
-                    "isArray": false,
+                "tags": {
+                    "name": "tags",
+                    "isArray": true,
                     "type": "String",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "published": {
+                    "name": "published",
+                    "isArray": false,
+                    "type": "AWSDateTime",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -618,5 +619,5 @@ export const schema = {
         }
     },
     "nonModels": {},
-    "version": "aa3dccd4bb0ce68a7295e94326141f8b"
+    "version": "fe68650dafc9b6b3c7a7ba51f3d1e0a1"
 };

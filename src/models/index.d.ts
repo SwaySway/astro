@@ -34,8 +34,8 @@ export declare class Blog {
   readonly id: string;
   readonly title?: string | null;
   readonly content?: string | null;
-  readonly switch?: boolean | null;
-  readonly authorName?: string | null;
+  readonly tags?: (string | null)[] | null;
+  readonly published?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Blog, BlogMetaData>);
